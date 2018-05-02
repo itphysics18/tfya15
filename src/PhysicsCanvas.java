@@ -16,8 +16,8 @@ public class PhysicsCanvas extends Canvas implements Runnable {
         setMinimumSize(d);
         setMaximumSize(d);
 
-        p1 = new Particle(750, 450, 20, Color.RED);
-        p2 = new Particle(550, 350, 20, Color.BLUE);
+        p1 = new Particle(41, 559, 20, Color.blue, 4, -120);
+        p2 = new Particle(550, 350, 5, Color.MAGENTA, 0, 0);
     }
 
     public static void main(String[] args) {

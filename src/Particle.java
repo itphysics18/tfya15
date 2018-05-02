@@ -28,14 +28,24 @@ public class Particle {
         this.vx = -1.0;
         this.vy = -0.1;
     }
+
+    public Particle(double x, double y, double r, Color color, double vx, double vy) {
+        this.x = x;
+        this.y = y;
+        this.r = r;
+        this.color = color;
+        this.vx = vx;
+        this.vy = vy;
+    }
+
     public double leapFrog(double v_i){
-        double gamma = 1;
+        double gamma = 0.5; //tidigare 1
         double dt = 0.1;
         double r_i = y;
         if(firstIterate){
-            gamma = 0.5;
+            gamma = 1; //tidigare 0.5
         }
-        double v_f = v_i + (9.8*dt)*gamma;
+        double v_f = v_i + (9.8*2*dt)*gamma; // OBS – förstärkt med faktor 2
 
         double r_f = r_i + v_f*dt;
         vy = v_f;
