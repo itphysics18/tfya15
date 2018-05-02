@@ -58,9 +58,11 @@ public class Particle {
         x += vx;
 
 
-        if (x<r ) vx *= -1;
-        if (y<r) vy *= -1;
-        if (x>(800-2*r)) vx *= -1;
+        //if (x<r ) vx *= -1;
+        if (x<-50) x = 850;
+        if (y<(-600+2*r)) vy *= -1;
+        //if (x>(1600-2*r)) vx *= -0.9;
+        if (x>850) x = -50;
         if (y>(600-2*r)) vy *= -0.9; // Studsfriktion
 
         y = leapFrog(vy);

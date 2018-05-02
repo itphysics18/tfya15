@@ -33,7 +33,6 @@ public class PhysicsCanvas extends Canvas implements Runnable {
         myFrame.pack();
         myFrame.setResizable(false);
         myFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        // 		myFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         myFrame.setVisible(true);
         physics.start();
         myFrame.setLocationRelativeTo(null);
@@ -80,8 +79,4 @@ public class PhysicsCanvas extends Canvas implements Runnable {
         p1.update();
         p2.update();
     }
-
-//yo
 }
-
-//Jeppe was here
