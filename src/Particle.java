@@ -32,8 +32,8 @@ public class Particle {
         x += vx;
         y += vy;
 
-        if (x < r) vx *= -1;
-        if (y < r) vy *= -1;
+        if (x < r || x+r > 800) vx *= -1;
+        if (y < r || y+r > 600) vy *= -1;
 
     }
 
