@@ -24,8 +24,8 @@ public class Particle {
 		this.y = y;
 		this.r = r;
 		this.color = color;
-		this.vx = -5.0;
-		this.vy = -4.5;
+		this.vx = -1.0;
+		this.vy = -0.5;
 	}
 	
 	
@@ -33,8 +33,8 @@ public class Particle {
 		x += vx;
 		y += vy;
 		
-		if (x<r || x + r > 800) vx *= -1;
-		if (y<r || y+r > 600) vy *= -1;
+		if (x<r) vx *= -1;
+		if (y<r) vy *= -1;
 
 	}
 	
