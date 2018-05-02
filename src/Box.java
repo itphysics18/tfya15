@@ -14,6 +14,8 @@ public class Box {
     double vx = 0;
     double vy = 0;
 
+    private Color color;
+
      public BufferedImage player;
 
     public Box(double mass, double r, double x, double y){
@@ -34,7 +36,7 @@ public class Box {
         }
     }
 
-    public void render(Graphics2D g) {
+    public void renderBox(Graphics2D g) {
         g.setColor(color);
         g.fillRect((int)Math.round(x-r), (int)Math.round(y-r), (int)Math.round(2*r), (int)Math.round(2*r));
     }
