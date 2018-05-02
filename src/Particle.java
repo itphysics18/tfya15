@@ -44,7 +44,7 @@ public class Particle {
         return r_f;
     }
 
-    public void update() {
+    public void update(Box b1, Box b2) {
         x += vx;
 
 
@@ -52,6 +52,18 @@ public class Particle {
         if (y<r) vy *= -1;
         if (x>(800-2*r)) vx *= -1;
         if (y>(600-2*r)) vy *= -1;
+        if (x>((b1.x-b1.r) - r) && x<((b1.x+b1.r) + r)){
+            if (y<((b1.y+b1.r) + r) && y>((b1.y-b1.r) - r)){
+                vx *= -1;
+                vy *= -1;
+            }
+        }
+        if (x>((b2.x-b2.r)-r) && x<((b2.x+b2.r)+r)) {
+            if (y <((b2.y+b2.r)+r) && y>((b2.y-b2.r)-r)) {
+                vx *= -1;
+                vy *= -1;
+            }
+        }
 
         y = leapFrog(vy);
 
