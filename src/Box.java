@@ -28,8 +28,7 @@ public class Box {
         this.vy = 0;
 
         try {
-            player = ImageIO.read(new File(FileSystems.getDefault().getPath(
-                    "src", "Box.png").toUri()));
+            player = ImageIO.read(new File(FileSystems.getDefault().getPath("src", "Box.png").toUri()));
         } catch (IOException e) {
             System.out.println("Image not found");
             player = new BufferedImage(50, 50, BufferedImage.TYPE_3BYTE_BGR);
@@ -39,7 +38,10 @@ public class Box {
     public void renderBox(Graphics2D g) {
         g.setColor(color);
         g.fillRect((int)Math.round(x-r), (int)Math.round(y-r), (int)Math.round(2*r), (int)Math.round(2*r));
+        g.drawImage(player, (int)Math.round(x - r), (int)Math.round(y - r),
+                (int)Math.round(r*2), (int)Math.round(r*2), null);    // Draw player
     }
+
 }
 
 // Kirrade alla trassligheter. // CM
