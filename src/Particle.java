@@ -42,3 +42,4 @@ public class Particle {
         g.fillOval((int) Math.round(x - r), (int) Math.round(y - r), (int) Math.round(2 * r), (int) Math.round(2 * r));
     }
 }
+// Bajs är gott
