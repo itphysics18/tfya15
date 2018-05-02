@@ -33,7 +33,7 @@ public class Particle {
         y += vy;
 
         if (x < r || x+r > 800) vx *= -1;
-        if (y < r|| y+r > 600) vy *= -1;
+        if (y < r || y+r > 600) vy *= -1;
 
     }
 
@@ -42,4 +42,5 @@ public class Particle {
         g.fillOval((int) Math.round(x - r), (int) Math.round(y - r), (int) Math.round(2 * r), (int) Math.round(2 * r));
     }
 }
-// Bajs är gott
+
+// hej hej
