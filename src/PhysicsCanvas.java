@@ -18,6 +18,9 @@ public class PhysicsCanvas extends Canvas implements Runnable {
 
         p1 = new Particle(750, 450, 20, Color.RED);
         p2 = new Particle(550, 350, 20, Color.BLUE);
+
+        b1 = new Box (10, 40, 300, 600);
+        b2 = new Box (5, 20, 600, 600);
     }
 
     public static void main(String[] args) {
