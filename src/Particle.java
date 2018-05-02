@@ -16,8 +16,8 @@ public class Particle {
         this.y = y;
         this.r = r;
         this.color = color;
-        this.vx = -1.0;
-        this.vy = -0.5;
+        this.vx = -5.0;
+        this.vy = -4.5;
     }
 
     public double getX() {
