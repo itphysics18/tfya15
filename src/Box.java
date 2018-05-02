@@ -1,4 +1,8 @@
 import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.FileSystems;
 
 public class Box {
     double mass = 0;
@@ -30,3 +34,4 @@ public class Box {
     }
 }
 
+// Kirrade alla trassligheter. // CM
