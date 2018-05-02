@@ -8,16 +8,21 @@ public class Box {
     double mass = 0;
     double size = 0;
     double fr = 0;
-    double posX = 0;
-    double posY = 0;
+    double x = 0;
+    double y = 0;
+    double vx = 0;
+    double vy = 0;
+
      public BufferedImage player;
 
-    public Box(double mass, double size, double fr, double posX, double posY){
+    public Box(double mass, double size, double x, double y){
         this.mass = mass;
         this.size = size;
-        this.fr = fr;
-        this.posX = posX;
-        this.posY = posY;
+        this.x = x;
+        this.y = y;
+        this.fr = 0.4;
+        this.vx = 0;
+        this.vy = 0;
 
         try {
             player = ImageIO.read(new File(FileSystems.getDefault().getPath(
