@@ -16,7 +16,13 @@ public class PhysicsCanvas extends Canvas implements Runnable {
         setMinimumSize(d);
         setMaximumSize(d);
 
-        p1 = new Particle(41, 559, 20, Color.blue, 4, -120);
+        Double vinkel = Double.parseDouble(JOptionPane.showInputDialog("Vilken vinkel vill du skjuta ut bollen i?"));
+        Double tryck = Double.parseDouble(JOptionPane.showInputDialog("Vilket tryck vill du ha i bollen?"));
+
+        Double p1vx = Math.cos(Math.toRadians(vinkel)) * tryck;
+        Double p1vy = 0 - Math.sin(Math.toRadians(vinkel)) * tryck;
+
+        p1 = new Particle(41, 559, 20, Color.blue, p1vx, p1vy);
         p2 = new Particle(550, 350, 5, Color.MAGENTA, 0, 0);
     }
 

@@ -45,7 +45,7 @@ public class Particle {
         if(firstIterate){
             gamma = 1; //tidigare 0.5
         }
-        double v_f = v_i + (9.8*2*dt)*gamma; // OBS – förstärkt med faktor 2
+        double v_f = v_i + (9.8*2*dt)*gamma; // Förstärkt med faktor 2
 
         double r_f = r_i + v_f*dt;
         vy = v_f;
@@ -61,7 +61,7 @@ public class Particle {
         if (x<r ) vx *= -1;
         if (y<r) vy *= -1;
         if (x>(800-2*r)) vx *= -1;
-        if (y>(600-2*r)) vy *= -1;
+        if (y>(600-2*r)) vy *= -0.9; // Studsfriktion
 
         y = leapFrog(vy);
 
