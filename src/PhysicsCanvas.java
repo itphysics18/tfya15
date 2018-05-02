@@ -8,7 +8,8 @@ public class PhysicsCanvas extends Canvas implements Runnable {
     private boolean running;
     private Particle p1;
     private Particle p2;
-
+    private Box b1;
+    private Box b2;
 
     public PhysicsCanvas() {
         Dimension d = new Dimension(800, 600);
@@ -19,8 +20,8 @@ public class PhysicsCanvas extends Canvas implements Runnable {
         p1 = new Particle(750, 450, 20, Color.RED);
         p2 = new Particle(550, 350, 20, Color.BLUE);
 
-        b1 = new Box (10, 40, 300, 600);
-        b2 = new Box (5, 20, 600, 600);
+        b1 = new Box (10, 40, 750, 450);
+        b2 = new Box (5, 20, 550, 350);
     }
 
     public static void main(String[] args) {
@@ -67,15 +68,32 @@ public class PhysicsCanvas extends Canvas implements Runnable {
         g.setColor(Color.WHITE);
         g.fillRect(0, 0, getWidth(), getHeight());
 
-        p1.render(g);
-        p2.render(g);
+        p1.renderParticle(g);
+        p2.renderParticle(g);
+        b1.renderBox(g);
+        b2.renderBox(g);
 
         strategy.show();
     }
+   /* private void renderBox() {
+        BufferStrategy strategy = getBufferStrategy();
+        Graphics2D g = (Graphics2D) strategy.getDrawGraphics();
+
+        g.setColor(Color.WHITE);
+        g.fillRect(0, 0, getWidth(), getHeight());
+
+        b1.renderBox(g);
+        b2.renderBox(g);
+
+        strategy.show();
+    }*/
 
     private void update() {
         p1.update();
         p2.update();
+        /* b1.update();
+        b2.update();
+         */
     }
 
 //yo

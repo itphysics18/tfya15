@@ -57,7 +57,7 @@ public class Particle {
 
     }
 
-    public void render(Graphics2D g) {
+    public void renderParticle(Graphics2D g) {
         g.setColor(color);
         g.fillOval((int)Math.round(x-r), (int)Math.round(y-r), (int)Math.round(2*r), (int)Math.round(2*r));
     }
