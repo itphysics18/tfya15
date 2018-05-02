@@ -40,7 +40,7 @@ public class PhysicsCanvas extends Canvas implements Runnable {
             render();
 
             try {
-                Thread.sleep(10);
+                Thread.sleep(5);
             } catch (InterruptedException e) {
                 e.printStackTrace();
                 running = false;
