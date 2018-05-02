@@ -36,8 +36,7 @@ public class Box {
     }
 
     public void renderBox(Graphics2D g) {
-        g.setColor(color);
-        g.fillRect((int)Math.round(x-r), (int)Math.round(y-r), (int)Math.round(2*r), (int)Math.round(2*r));
+
         g.drawImage(player, (int)Math.round(x - r), (int)Math.round(y - r),
                 (int)Math.round(r*2), (int)Math.round(r*2), null);    // Draw player
     }
