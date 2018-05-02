@@ -11,12 +11,14 @@ public class Box {
 
      public BufferedImage player;
 
-    public Box(double mass, double size, double fr, double x, double y, double vx, double vy){
+    public Box(double mass, double size, double x, double y){
         this.mass = mass;
         this.size = size;
-        this.fr = fr;
         this.x = x;
         this.y = y;
+        this.fr = 0.4;
+        this.vx = 0;
+        this.vy = 0;
 
         try {
             player = ImageIO.read(new File(FileSystems.getDefault().getPath(
