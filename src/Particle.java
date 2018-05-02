@@ -50,7 +50,7 @@ public class Particle {
 
         if (x<r ) vx *= -1;
         if (y<r) vy *= -1;
-        if (x>(800-2*r)) vx *= -1;
+        if (x>(800-r)) vx *= -1;                    //ändrade 2r till bara r
         if (y>(600-2*r)) vy *= -1;
         if (x>((b1.x-b1.r) - r) && x<((b1.x+b1.r) + r)){
             if (y<((b1.y+b1.r) + r) && y>((b1.y-b1.r) - r)){
