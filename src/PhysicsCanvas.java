@@ -93,9 +93,9 @@ public class PhysicsCanvas extends Canvas implements Runnable {
     }*/
 
     private void update() {
-       // p1.update(b1, b2);
-       // p2.update(b1, b2);
-        p1.update();
-        p2.update();
+        p1.update(b1, b2);
+        p2.update(b1, b2);
+      //  p1.update();
+      //  p2.update();
     }
 }
