@@ -8,7 +8,8 @@ public class PhysicsCanvas extends Canvas implements Runnable {
     private boolean running;
     private Particle p1;
     private Particle p2;
-
+    private Box b1;
+    private Box b2;
 
     public PhysicsCanvas() {
         Dimension d = new Dimension(800, 600);
@@ -16,6 +17,8 @@ public class PhysicsCanvas extends Canvas implements Runnable {
         setMinimumSize(d);
         setMaximumSize(d);
 
+        b1 = new Box (10, 40, 600, 560);
+        b2 = new Box (5, 20, 200, 580);
         Double vinkel = Double.parseDouble(JOptionPane.showInputDialog("Vilken vinkel vill du skjuta ut bollen i?"));
         Double tryck = Double.parseDouble(JOptionPane.showInputDialog("Vilket tryck vill du ha i bollen?"));
 
@@ -69,13 +72,29 @@ public class PhysicsCanvas extends Canvas implements Runnable {
         g.setColor(Color.WHITE);
         g.fillRect(0, 0, getWidth(), getHeight());
 
-        p1.render(g);
-        p2.render(g);
+        p1.renderParticle(g);
+        p2.renderParticle(g);
+        b1.renderBox(g);
+        b2.renderBox(g);
 
         strategy.show();
     }
+   /* private void renderBox() {
+        BufferStrategy strategy = getBufferStrategy();
+        Graphics2D g = (Graphics2D) strategy.getDrawGraphics();
+
+        g.setColor(Color.WHITE);
+        g.fillRect(0, 0, getWidth(), getHeight());
+
+        b1.renderBox(g);
+        b2.renderBox(g);
+
+        strategy.show();
+    }*/
 
     private void update() {
+       // p1.update(b1, b2);
+       // p2.update(b1, b2);
         p1.update();
         p2.update();
     }
