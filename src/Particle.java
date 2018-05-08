@@ -10,6 +10,8 @@ public class Particle {
     private double r;
     private Color color;
 
+    private int ignoreOneBounce = 0;
+
     private double x;
     public double getX() {
         return x;
@@ -54,34 +56,31 @@ public class Particle {
         return r_f;
     }
 
-    public void update() {
-        x += vx;
-
-
+    public void windowBounce() {
         //if (x<r ) vx *= -1;
         if (x<-50) x = 850;
-        if (y<(-600+2*r)) vy *= -1;
+        if (y<(-600+2*r)) vy *= -0.95;
         //if (x>(1600-2*r)) vx *= -0.9;
         if (x>850) x = -50;
         if (y>(600-2*r)) vy *= -0.9; // Studsfriktion
+    }
 
+    public void update() {
+        x += vx;
+        windowBounce();
         y = leapFrog(vy);
 
     }
 
     public void update(Box b1, Box b2) {
         x += vx;
+        windowBounce();
 
-        if (x<-50) x = 850;
-        if (y<(-600+2*r)) vy *= -0.95;
-        if (x>850) x = -50;
-        if (y>(600-2*r)) vy *= -0.9; // Studsfriktion
-
-
-    /*    if (x<r ) vx *= -1;
+    /*  if (x<r ) vx *= -1;
         if (y<r) vy *= -1;
         if (x>(800-r)) vx *= -1;                    //ändrade 2r till bara r
         if (y>(600-2*r)) vy *= -1; */
+
         if (x>((b1.x-b1.r) - r) && x<((b1.x+b1.r) + r)){
             if (y<((b1.y+b1.r) + r) && y>((b1.y-b1.r) - r)){
                 vx *= -0.95;
@@ -98,6 +97,41 @@ public class Particle {
         y = leapFrog(vy);
 
     }
+
+    public void update(Box b1, Box b2, Particle p1) {
+        x += vx;
+        windowBounce();
+
+        if (x>((b1.x-b1.r) - r) && x<((b1.x+b1.r) + r)){
+            if (y<((b1.y+b1.r) + r) && y>((b1.y-b1.r) - r)){
+                vx *= -0.95;
+                vy *= -0.9;
+            }
+        }
+        if (x>((b2.x-b2.r)-r) && x<((b2.x+b2.r)+r)) {
+            if (y <((b2.y+b2.r)+r) && y>((b2.y-b2.r)-r)) {
+                vx *= -0.95;
+                vy *= -0.9;
+            }
+        }
+        if (ignoreOneBounce != 0) {
+            ignoreOneBounce -= 1;
+        } else {
+            if (x > ((p1.x - p1.r) - r) && x < ((p1.x + p1.r) + r)) {
+                if (y < ((p1.y + p1.r) + r) && y > ((p1.y - p1.r) - r)) {
+                    vx = ((r - p1.r) / (r + p1.r) * vx + 2 * p1.r / (r + p1.r) * p1.vx);
+                    vy = ((r - p1.r) / (r + p1.r) * vy + 2 * p1.r / (r + p1.r) * p1.vy);
+                    ignoreOneBounce = 10;
+                }
+            }
+        }
+
+
+        y = leapFrog(vy);
+
+    }
+
+
 
     public void renderParticle(Graphics2D g) {
         g.setColor(color);

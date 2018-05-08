@@ -26,7 +26,7 @@ public class PhysicsCanvas extends Canvas implements Runnable {
         Double p1vy = 0 - Math.sin(Math.toRadians(vinkel)) * tryck;
 
         p1 = new Particle(41, 559, 20, Color.blue, p1vx, p1vy);
-        p2 = new Particle(550, 350, 5, Color.MAGENTA, 0, 0);
+        p2 = new Particle(550, 350, 10, Color.MAGENTA, -10, 0);
     }
 
     public static void main(String[] args) {
@@ -93,8 +93,8 @@ public class PhysicsCanvas extends Canvas implements Runnable {
     }*/
 
     private void update() {
-        p1.update(b1, b2);
-        p2.update(b1, b2);
+        p1.update(b1, b2, p2);
+        p2.update(b1, b2, p1);
       //  p1.update();
       //  p2.update();
     }
