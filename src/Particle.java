@@ -9,6 +9,7 @@ public class Particle {
     private double vy;
     private double r;
     private Color color;
+    private double m;
 
     private double x;
     public double getX() {
@@ -20,10 +21,11 @@ public class Particle {
         return y;
     }
 
-    public Particle(double x, double y, double r, Color color) {
+    public Particle(double x, double y, double r, double m, Color color) {
         this.x = x;
         this.y = y;
         this.r = r;
+        this.m = m;
         this.color = color;
         this.vx = -1.0;
         this.vy = -0.1;
@@ -50,12 +52,15 @@ public class Particle {
 
         if (x<r ) vx *= -1;
         if (y<r) vy *= -1;
-        if (x>(800-r)) vx *= -1;                    //ändrade 2r till bara r
+        if (x>(800-r)) vx *= -1;
         if (y>(600-2*r)) vy *= -1;
         if (x>((b1.x-b1.r) - r) && x<((b1.x+b1.r) + r)){
             if (y<((b1.y+b1.r) + r) && y>((b1.y-b1.r) - r)){
                 vx *= -1;
                 vy *= -1;
+                if(Math.abs(x-b1.x) > Math.abs(y-b1.y)){
+                    update(Particle);
+                }
             }
         }
         if (x>((b2.x-b2.r)-r) && x<((b2.x+b2.r)+r)) {

@@ -35,6 +35,11 @@ public class Box {
         }
     }
 
+    public void update (Particle p){
+        m = p.m;
+
+    }
+
     public void renderBox(Graphics2D g) {
 
         g.drawImage(player, (int)Math.round(x - r), (int)Math.round(y - r),
