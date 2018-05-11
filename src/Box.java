@@ -5,21 +5,14 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.FileSystems;
 
-public class Box {
-    double mass = 0;
-    double r = 0;
-    double fr = 0;
-    double x = 0;
-    double y = 0;
-    double vx = 0;
-    double vy = 0;
-
+public class Box extends GameObject {
+    private double fr = 0;
     private Color color;
 
-     public BufferedImage player;
+    public BufferedImage player;
 
-    public Box(double mass, double r, double x, double y){
-        this.mass = mass;
+    public Box(double m, double r, double x, double y){
+        this.m = m;
         this.r = r;
         this.x = x;
         this.y = y;
@@ -35,6 +28,11 @@ public class Box {
         }
     }
 
+    public void update (Particle p){
+        m = p.getM();
+
+    }
+
     public void renderBox(Graphics2D g) {
 
         g.drawImage(player, (int)Math.round(x - r), (int)Math.round(y - r),
@@ -42,6 +40,3 @@ public class Box {
     }
 
 }
-
-// Kirrade alla trassligheter. // CM
-// Wilma was here

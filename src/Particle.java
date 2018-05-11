@@ -2,30 +2,17 @@ import java.awt.Graphics2D;
 import java.awt.Color;
 
 
-public class Particle {
+public class Particle extends GameObject {
 
     private boolean firstIterate = true;
-    private double vx;
-    private double vy;
-    private double r;
     private Color color;
-
     private int ignoreOneBounce = 0;
 
-    private double x;
-    public double getX() {
-        return x;
-    }
-
-    private double y;
-    public double getY() {
-        return y;
-    }
-
-    public Particle(double x, double y, double r, Color color) {
+    public Particle(double x, double y, double r, double m, Color color) {
         this.x = x;
         this.y = y;
         this.r = r;
+        this.m = m;
         this.color = color;
         this.vx = -1.0;
         this.vy = -0.1;
@@ -41,13 +28,13 @@ public class Particle {
     }
 
     public double leapFrog(double v_i){
-        double gamma = 0.5; //tidigare 1
+        double gamma = 1;
         double dt = 0.1;
         double r_i = y;
         if(firstIterate){
-            gamma = 1; //tidigare 0.5
+            gamma = 0.5;
         }
-        double v_f = v_i + (9.8*2*dt)*gamma; // Förstärkt med faktor 2
+        double v_f = v_i + (9.8*dt)*gamma;
 
         double r_f = r_i + v_f*dt;
         vy = v_f;
@@ -85,6 +72,11 @@ public class Particle {
             if (y<((b1.y+b1.r) + r) && y>((b1.y-b1.r) - r)){
                 vx *= -0.95;
                 vy *= -0.9;
+                vx *= -1;
+                vy *= -1;
+/*                if(Math.abs(x-b1.x) > Math.abs(y-b1.y)){
+                    update(Particle);
+                }*/
             }
         }
         if (x>((b2.x-b2.r)-r) && x<((b2.x+b2.r)+r)) {
@@ -130,8 +122,6 @@ public class Particle {
         y = leapFrog(vy);
 
     }
-
-
 
     public void renderParticle(Graphics2D g) {
         g.setColor(color);
