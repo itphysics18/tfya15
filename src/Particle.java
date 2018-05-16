@@ -6,7 +6,7 @@ public class Particle extends GameObject {
 
     private boolean firstIterate = true;
     private Color color;
-    private double bounce = -0.95;
+    private double bounce = -0.9;
 
     public Particle(double x, double y, double r, double m, Color color) {
         this.x = x;
@@ -14,7 +14,7 @@ public class Particle extends GameObject {
         this.r = r;
         this.m = m;
         this.color = color;
-        this.vx = -2.0;
+        this.vx = -3.5;
         this.vy = -0.1;
     }
     public double leapFrog(double v_i){
@@ -26,7 +26,7 @@ public class Particle extends GameObject {
         }
         double v_f = v_i + (-gravity*dt)*gamma;
 
-        if ((r_i + v_f*dt)>(600-2*r) && (v_f > 0)){
+        if ((r_i + v_f*dt)>(600-r) && (v_f > 0)){
             v_f *= bounce; // För att försöka förhindra kvicksanden //Mange
         }
 
@@ -37,16 +37,17 @@ public class Particle extends GameObject {
         return r_f;
     }
 
+    double ignoreBounce = 0;
 
 
     public void update(Box b1, Box b2) {
         x += vx;
         y = leapFrog(vy);
 
-        if (x<r) vx *= -1;
-        if (y<r) vy *= bounce;
-        if (x>(800-r)) vx *= -1;
-        if (y>(600-2*r) && (vy > 0)) vy *= bounce;
+        if ((x<r) && (vx < 0)) vx *= bounce;
+        if ((y<r) && (vy < 0)) vy *= bounce;
+        if (x>(800-r) && (vx > 0)) vx *= bounce;
+        if (y>(600-r) && (vy > 0)) vy *= bounce;
 
         double b1R = b1.getR();
 
@@ -54,14 +55,19 @@ public class Particle extends GameObject {
             if (y<((b1.getY()+b1R) + r) && y>((b1.getY()-b1R) - r)){
              //   vx *= -1;
 
-                if(Math.abs(x-b1.getX()) > Math.abs(y-b1.getY())){
-                    System.out.println("TWO!!");
+                if(Math.abs(x-b1.getX()+r) > Math.abs(y-b1.getY())){
+                 //   System.out.println("TWO!!");
                     collision(b1);
                 }
-                else{
+                else if (ignoreBounce == 0){
                     vy *= bounce;
+                    ignoreBounce = 10;
                 }
             }
+        }
+
+        if (ignoreBounce > 0) {
+            ignoreBounce--;
         }
 
         double b2R = b2.getR();
@@ -70,8 +76,8 @@ public class Particle extends GameObject {
             if (y <((b2.getY()+b2R)+r) && y>((b2.getY()-b2R)-r)) {
              //   vx *= -1;
              //   vy *= -1;
-                 if(Math.abs(x-b2.getX()) > Math.abs(y-b2.getY())){
-                    System.out.println("ONE!!");
+                 if(Math.abs(x-b2.getX()+r) > Math.abs(y-b2.getY())){
+                 //   System.out.println("ONE!!");
                     collision(b2);
                 }
                  else{
@@ -85,9 +91,9 @@ public class Particle extends GameObject {
 
     }
 
-    double ignoreBounce = 0;
     //double lastCollisionX = 0;
     //double lastCollisionY = 0;
+    int lastCollision = 0;
 
     public void collision (Box b) {
         //  System.out.println("IM IN");
@@ -106,20 +112,23 @@ public class Particle extends GameObject {
         double deltaY = Math.abs(y - b.getY());
         double distance = deltaX * deltaX + deltaY * deltaY;
 
+        if (lastCollision != b.hashCode()) {
+            ignoreBounce = 0;
+        }
+
         if (Math.abs(x - b.getX()) < (r + b.getR()) && ignoreBounce == 0) {
             System.out.println("Particle: vx:" + vx + " m: " + m + " bM: " + b.getM() + " bVX: " + b.getVX());
+            double oldVx = vx;
             vx = ((vx * (m - b.getM()) + (2 * b.getM() * b.getVX())) / (m + b.getM()));
             System.out.println(vx);
             System.out.println("Box: vx:" + b.getVX() + " bM: " + b.getM() + " m: " + m + " vx: " + vx);
-            double bVX = (b.getVX() * (b.getM() - m) + (2 * m * vx)) / (b.getM() + m);
+            double bVX = (b.getVX() * (b.getM() - m) + (2 * m * oldVx)) / (b.getM() + m);
             System.out.println(bVX);
             b.setVX(bVX * 10);
             System.out.println("New bVX: " + b.getVX());
             //b.setVX((b.getVX() * (b.getM() - m) + (2 * m * vx)) / (b.getM() + m));
-            ignoreBounce = 10;
-        }
-        if (ignoreBounce > 0) {
-            ignoreBounce--;
+            ignoreBounce = 20;
+            lastCollision = b.hashCode();
         }
     /*    if (distance < (r + b.getR()) * (r + b.getR()) && ignoreBounce == 0) {
             if (x < (lastCollisionX + r) && x > (lastCollisionX - r)
