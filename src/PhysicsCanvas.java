@@ -17,21 +17,25 @@ public class PhysicsCanvas extends Canvas implements Runnable {
         setMinimumSize(d);
         setMaximumSize(d);
 
-        p1 = new Particle(750, 450, 20, 15, Color.RED);
-    //    p2 = new Particle(550, 350, 20, 25, Color.BLUE);
+        double vinkel = Double.parseDouble(JOptionPane.showInputDialog("Vilken vinkel vill du skjuta ut bollen i?"));
+        double tryck = Double.parseDouble(JOptionPane.showInputDialog("Vilket tryck vill du ha i bollen?"));
+
+        double p1vx = Math.cos(Math.toRadians(vinkel)) * tryck;
+        double p1vy = 0 - Math.sin(Math.toRadians(vinkel)) * tryck;
+
+        p1 = new Particle(20, 580, 20, 15, Color.RED, p1vx, p1vy);
 
         b1 = new Box (10, 40, 600, 560);
         b2 = new Box (20, 50, 200, 550);
     }
 
     public static void main(String[] args) {
-        JFrame myFrame = new JFrame("My physics canvas");
+        JFrame myFrame = new JFrame("Det magiska bollspelet");
         PhysicsCanvas physics = new PhysicsCanvas();
         myFrame.add(physics);
         myFrame.pack();
         myFrame.setResizable(false);
         myFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        // 		myFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         myFrame.setVisible(true);
         physics.start();
         myFrame.setLocationRelativeTo(null);
@@ -69,56 +73,16 @@ public class PhysicsCanvas extends Canvas implements Runnable {
         g.fillRect(0, 0, getWidth(), getHeight());
 
         p1.renderParticle(g);
-     //   p2.renderParticle(g);
         b1.renderBox(g);
         b2.renderBox(g);
 
         strategy.show();
     }
-   /* private void renderBox() {
-        BufferStrategy strategy = getBufferStrategy();
-        Graphics2D g = (Graphics2D) strategy.getDrawGraphics();
 
-        g.setColor(Color.WHITE);
-        g.fillRect(0, 0, getWidth(), getHeight());
-
-        b1.renderBox(g);
-        b2.renderBox(g);
-
-        strategy.show();
-    }*/
-
-    private void update() {
+   private void update() {
         p1.update(b1, b2);
-        //p2.update(b1, b2);
         b1.update();
         b2.update();
-    //    checkCollision();
 
     }
-
-    private double ignoreBounce = 0;
-    private double lastCollisionX = 0;
-    private double lastCollisionY = 0;
-
-/*
-    public void checkCollision() {
-
-        double deltaX = Math.abs(p1.getX() - p2.getX());
-        double deltaY = Math.abs(p1.getY() - p2.getY());
-        double distance = deltaX * deltaX + deltaY * deltaY;
-
-        if (distance < (p1.getR() + p2.getR()) * (p1.getR() + p2.getR()) && ignoreBounce == 0) {
-            if (p1.getX() < (lastCollisionX + p1.getR()) && p1.getX() > (lastCollisionX - p1.getR())
-                    && p1.getY() < (lastCollisionY + p1.getR()) && p1.getY() > (lastCollisionY - p1.getR())) {
-                p1.setVX((p1.getVX() * (p1.getR() - p2.getR()) + (2 * p2.getR() * p2.getVX())) / (p1.getR() + p2.getR()));
-                p1.setVY((p1.getVY() * (p1.getR() - p2.getR()) + (2 * p2.getR() * p2.getVY())) / (p1.getR() + p2.getR()));
-                p2.setVX((p2.getVX() * (p2.getR() - p1.getR()) + (2 * p1.getR() * p1.getVX())) / (p2.getR() + p1.getR()));
-                p2.setVY((p2.getVY() * (p2.getR() - p1.getR()) + (2 * p1.getR() * p1.getVY())) / (p2.getR() + p1.getR()));
-                lastCollisionX = p1.getX();
-                lastCollisionY = p1.getY();
-            }
-        }
-    }
-*/
 }

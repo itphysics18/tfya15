@@ -31,7 +31,7 @@ public class Box extends GameObject {
 
     boolean firstIterate;
 
-    public void leapFrog(){
+    public void leapFrogX(){
         double gamma = 1;
         double dt = 0.1;
       //  double r_i = x;
@@ -58,11 +58,33 @@ public class Box extends GameObject {
     //    return r_f;
     }
 
+    public double leapFrogY(double v_i){
+        double gamma = 1;
+        double dt = 0.1;
+        double r_i = y;
+        if(firstIterate){
+            gamma = 0.5;
+        }
+        double v_f = v_i + (9.8*dt)*gamma;
+
+        double r_f = r_i + v_f*dt;
+        vy = v_f;
+        firstIterate = false;
+        y+= v_f;
+        return v_f;
+
+    }
+
 
     public void update(){
      // x += vx;
 
-      leapFrog();
+      leapFrogX();
+
+        if ((x < 210 || x> 490) && y<560) { // x är lådans possition i x led(höger/vänster) -+ rade. och
+            System.out.println("hej");
+            leapFrogY(vy);
+        }
 
 
     }

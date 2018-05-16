@@ -8,14 +8,14 @@ public class Particle extends GameObject {
     private Color color;
     private double bounce = -0.9;
 
-    public Particle(double x, double y, double r, double m, Color color) {
+    public Particle(double x, double y, double r, double m, Color color, double vx, double vy) {
         this.x = x;
         this.y = y;
         this.r = r;
         this.m = m;
         this.color = color;
-        this.vx = -3.5;
-        this.vy = -0.1;
+        this.vx = vx;
+        this.vy = vy;
     }
     public double leapFrog(double v_i){
         double gamma = 1;
@@ -117,15 +117,15 @@ public class Particle extends GameObject {
         }
 
         if (Math.abs(x - b.getX()) < (r + b.getR()) && ignoreBounce == 0) {
-            System.out.println("Particle: vx:" + vx + " m: " + m + " bM: " + b.getM() + " bVX: " + b.getVX());
+        //    System.out.println("Particle: vx:" + vx + " m: " + m + " bM: " + b.getM() + " bVX: " + b.getVX());
             double oldVx = vx;
             vx = ((vx * (m - b.getM()) + (2 * b.getM() * b.getVX())) / (m + b.getM()));
-            System.out.println(vx);
-            System.out.println("Box: vx:" + b.getVX() + " bM: " + b.getM() + " m: " + m + " vx: " + vx);
+         //   System.out.println(vx);
+         //   System.out.println("Box: vx:" + b.getVX() + " bM: " + b.getM() + " m: " + m + " vx: " + vx);
             double bVX = (b.getVX() * (b.getM() - m) + (2 * m * oldVx)) / (b.getM() + m);
-            System.out.println(bVX);
+         //   System.out.println(bVX);
             b.setVX(bVX * 10);
-            System.out.println("New bVX: " + b.getVX());
+         //   System.out.println("New bVX: " + b.getVX());
             //b.setVX((b.getVX() * (b.getM() - m) + (2 * m * vx)) / (b.getM() + m));
             ignoreBounce = 20;
             lastCollision = b.hashCode();
@@ -146,5 +146,11 @@ public class Particle extends GameObject {
     public void renderParticle(Graphics2D g) {
         g.setColor(color);
         g.fillOval((int)Math.round(x-r), (int)Math.round(y-r), (int)Math.round(2*r), (int)Math.round(2*r));
+
+        // Lagt till en plattform som lådan kan stå på!
+
+        g.drawRect(250, 220, 200, 50);
+        g.setColor(Color.green);
+        g.fillRect(250, 220, 200, 50);
     }
 }
