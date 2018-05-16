@@ -80,14 +80,13 @@ public class Box extends GameObject {
         if ((x<r) && (vx < 0)) vx *= -0.2;
         if (x>(800-r) && (vx > 0)) vx *= -0.2;
 
-      leapFrogX();
+        leapFrogX();
 
         if ((x < plat.getxX()-r || x > plat.getxX() + plat.getW() + r) && y<(600-r)) { // x är lådans possition i x led(höger/vänster) -+ rade. och
             leapFrogY(vy);
         } else if (y>(600-r)) {
             y = 600-r;
         }
-
 
     }
     public void renderBox(Graphics2D g) {
