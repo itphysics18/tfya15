@@ -5,6 +5,8 @@ abstract class GameObject {
     protected double vy;
     protected double r;
     protected double m;
+    protected double w;
+    protected double h;
 
     protected final double gravity = -9.8;
 

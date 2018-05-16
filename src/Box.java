@@ -76,12 +76,12 @@ public class Box extends GameObject {
     }
 
 
-    public void update(){
+    public void update(Platform plat){
      // x += vx;
 
       leapFrogX();
 
-        if ((x < 210 || x> 490) && y<560) { // x är lådans possition i x led(höger/vänster) -+ rade. och
+        if ((x < plat.getX()-r || x > plat.getX() + plat.getW() + r) && y<560) { // x är lådans possition i x led(höger/vänster) -+ rade. och
             System.out.println("hej");
             leapFrogY(vy);
         }

@@ -17,8 +17,8 @@ public class Particle extends GameObject {
         this.vx = vx;
         this.vy = vy;
     }
-    public double leapFrog(double v_i){
-        double gamma = 1;
+        public double leapFrog(double v_i){
+            double gamma = 1;
         double dt = 0.1;
         double r_i = y;
         if(firstIterate){
@@ -40,7 +40,7 @@ public class Particle extends GameObject {
     double ignoreBounce = 0;
 
 
-    public void update(Box b1, Box b2) {
+    public void update(Box b1, Box b2, Platform plat) {
         x += vx;
         y = leapFrog(vy);
 
@@ -49,6 +49,17 @@ public class Particle extends GameObject {
         if (x>(800-r) && (vx > 0)) vx *= bounce;
         if (y>(600-r) && (vy > 0)) vy *= bounce;
 
+        if ((x>plat.getX()-r) && (x<plat.getX()+plat.getW()+r) && (y > plat.getY()-r) && (y < plat.getY()+plat.getH()+r)) {
+            if(Math.abs(x-plat.getX()) > Math.abs(y-plat.getY())) {
+                vy *= bounce;
+
+            }
+            else{
+
+                vx *= bounce;
+               // System.out.println("HIT");
+            }
+        }
         double b1R = b1.getR();
 
         if (x>((b1.getX()-b1R) - r) && x<((b1.getX()+b1R) + r)){
@@ -149,8 +160,6 @@ public class Particle extends GameObject {
 
         // Lagt till en plattform som lådan kan stå på!
 
-        g.drawRect(250, 220, 200, 50);
-        g.setColor(Color.green);
-        g.fillRect(250, 220, 200, 50);
+
     }
 }

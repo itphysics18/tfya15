@@ -10,6 +10,7 @@ public class PhysicsCanvas extends Canvas implements Runnable {
     private Particle p2;
     private Box b1;
     private Box b2;
+    private Platform plat1;
 
     public PhysicsCanvas() {
         Dimension d = new Dimension(800, 600);
@@ -26,7 +27,9 @@ public class PhysicsCanvas extends Canvas implements Runnable {
         p1 = new Particle(20, 580, 20, 15, Color.RED, p1vx, p1vy);
 
         b1 = new Box (10, 40, 600, 560);
-        b2 = new Box (20, 50, 200, 550);
+        b2 = new Box (20, 50, 450, 170);
+        //  g.fillRect(250, 220, 200, 50);
+        plat1 = new Platform(350, 220, 200, 50, Color.cyan);
     }
 
     public static void main(String[] args) {
@@ -75,14 +78,14 @@ public class PhysicsCanvas extends Canvas implements Runnable {
         p1.renderParticle(g);
         b1.renderBox(g);
         b2.renderBox(g);
-
+        plat1.renderPlatform(g);
         strategy.show();
     }
 
    private void update() {
-        p1.update(b1, b2);
-        b1.update();
-        b2.update();
+        p1.update(b1, b2, plat1);
+        b1.update(plat1);
+        b2.update(plat1);
 
     }
 }
