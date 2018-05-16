@@ -5,18 +5,12 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.FileSystems;
 
-public class Box {
-    double m = 0;
-    double r = 0;
-    double my = 0;
-    double x = 0;
-    double y = 0;
-    double vx = 0;
-    double vy = 0;
+public class Box extends GameObject {
+    private double my = 0;
 
     private Color color;
 
-     public BufferedImage player;
+    public BufferedImage player;
 
     public Box(double m, double r, double x, double y){
         this.m = m;
@@ -34,7 +28,9 @@ public class Box {
             player = new BufferedImage(50, 50, BufferedImage.TYPE_3BYTE_BGR);
         }
     }
-        boolean firstIterate;
+
+    boolean firstIterate;
+
     public void leapFrog(){
         double gamma = 1;
         double dt = 0.1;
@@ -49,7 +45,7 @@ public class Box {
             k=-1;
         }
         if(vx != 0) {
-            vx = vx + (k * my * (-9.8) * dt * gamma);
+            vx = vx + (k * my * (gravity) * dt * gamma);
         }
         if((vi < 0 && vx > 0) || (vi > 0 && vx < 0)){
             vx=0;
@@ -64,7 +60,6 @@ public class Box {
 
 
     public void update(){
-    //    System.out.println("Snopp");
      // x += vx;
 
       leapFrog();
@@ -72,15 +67,7 @@ public class Box {
 
     }
     public void renderBox(Graphics2D g) {
-
         g.drawImage(player, (int)Math.round(x - r), (int)Math.round(y - r),
                 (int)Math.round(r*2), (int)Math.round(r*2), null);    // Draw player
     }
-
-    public void set_vx (double vx){
-        this.vx = vx;
-    }
 }
-
-// Kirrade alla trassligheter. // CM
-// Wilma was here

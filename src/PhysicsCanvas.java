@@ -17,11 +17,11 @@ public class PhysicsCanvas extends Canvas implements Runnable {
         setMinimumSize(d);
         setMaximumSize(d);
 
-        p1 = new Particle(750, 450, 20, 20, Color.RED);
-        p2 = new Particle(550, 350, 20, 15, Color.BLUE);
+        p1 = new Particle(750, 450, 20, 50, Color.RED);
+        p2 = new Particle(550, 350, 20, 25, Color.BLUE);
 
-        b1 = new Box (20, 40, 600, 560);
-        b2 = new Box (20, 40, 200, 560);
+        b1 = new Box (10, 40, 600, 560);
+        b2 = new Box (10, 40, 200, 560);
     }
 
     public static void main(String[] args) {
@@ -93,10 +93,32 @@ public class PhysicsCanvas extends Canvas implements Runnable {
         p2.update(b1, b2);
         b1.update();
         b2.update();
+        checkCollision();
 
     }
 
-//yo
-}
+    private double ignoreBounce = 0;
+    private double lastCollisionX = 0;
+    private double lastCollisionY = 0;
 
-//Jeppe was here
+
+    public void checkCollision() {
+
+        double deltaX = Math.abs(p1.getX() - p2.getX());
+        double deltaY = Math.abs(p1.getY() - p2.getY());
+        double distance = deltaX * deltaX + deltaY * deltaY;
+
+        if (distance < (p1.getR() + p2.getR()) * (p1.getR() + p2.getR()) && ignoreBounce == 0) {
+            if (p1.getX() < (lastCollisionX + p1.getR()) && p1.getX() > (lastCollisionX - p1.getR())
+                    && p1.getY() < (lastCollisionY + p1.getR()) && p1.getY() > (lastCollisionY - p1.getR())) {
+                p1.setVX((p1.getVX() * (p1.getR() - p2.getR()) + (2 * p2.getR() * p2.getVX())) / (p1.getR() + p2.getR()));
+                p1.setVY((p1.getVY() * (p1.getR() - p2.getR()) + (2 * p2.getR() * p2.getVY())) / (p1.getR() + p2.getR()));
+                p2.setVX((p2.getVX() * (p2.getR() - p1.getR()) + (2 * p1.getR() * p1.getVX())) / (p2.getR() + p1.getR()));
+                p2.setVY((p2.getVY() * (p2.getR() - p1.getR()) + (2 * p1.getR() * p1.getVY())) / (p2.getR() + p1.getR()));
+                lastCollisionX = p1.getX();
+                lastCollisionY = p1.getY();
+            }
+        }
+    }
+
+}
