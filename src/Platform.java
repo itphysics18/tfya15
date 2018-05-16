@@ -17,8 +17,8 @@ public class Platform{
 
     }
 
-    public double getX() { return x; }
-    public double getY() { return y; }
+    public double getxX() { return x; }
+    public double getyY() { return y; }
     public double getW() { return w; }
     public double getH() { return h; }
     public void renderPlatform(Graphics2D g) {

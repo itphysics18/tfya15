@@ -77,12 +77,12 @@ public class Box extends GameObject {
 
 
     public void update(Platform plat){
-     // x += vx;
+        if ((x<r) && (vx < 0)) vx *= -0.2;
+        if (x>(800-r) && (vx > 0)) vx *= -0.2;
 
       leapFrogX();
 
-        if ((x < plat.getX()-r || x > plat.getX() + plat.getW() + r) && y<(600-r)) { // x är lådans possition i x led(höger/vänster) -+ rade. och
-        //    System.out.println("hej");
+        if ((x < plat.getxX()-r || x > plat.getxX() + plat.getW() + r) && y<(600-r)) { // x är lådans possition i x led(höger/vänster) -+ rade. och
             leapFrogY(vy);
         } else if (y>(600-r)) {
             y = 600-r;
@@ -95,13 +95,13 @@ public class Box extends GameObject {
                 (int)Math.round(r*2), (int)Math.round(r*2), null);    // Draw player
     }
 
-    int winDelay = 0;
+    private int winDelay = 0;
     public boolean win() {
-        if(y>=600-r && winDelay > 200) {
+        if(y>=600-r && winDelay > 50) {
             return true;
-        } else {
+        } else if (y>=600-r) {
             winDelay++;
-            return false;
         }
+        return false;
     }
 }

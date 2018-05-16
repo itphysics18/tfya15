@@ -1,8 +1,9 @@
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.image.BufferStrategy;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.FileSystems;
@@ -31,14 +32,16 @@ public class PhysicsCanvas extends Canvas implements Runnable {
 
         p1 = new Particle(20, 580, 20, 15, Color.RED, p1vx, p1vy);
 
-        b1 = new Box (10, 40, 600, 560);
+        b1 = new Box (10, 40, 350, 560);
         b2 = new Box (20, 50, 450, 170);
         //  g.fillRect(250, 220, 200, 50);
         plat1 = new Platform(350, 220, 200, 50, Color.cyan);
     }
 
+    private static JFrame myFrame;
+
     public static void main(String[] args) {
-        JFrame myFrame = new JFrame("Det magiska bollspelet");
+        myFrame = new JFrame("Det magiska bollspelet");
         PhysicsCanvas physics = new PhysicsCanvas();
         myFrame.add(physics);
         myFrame.pack();
@@ -46,12 +49,41 @@ public class PhysicsCanvas extends Canvas implements Runnable {
         myFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         myFrame.setVisible(true);
         physics.start();
+    //    System.out.println("Back in main");
         myFrame.setLocationRelativeTo(null);
+        myFrame.addKeyListener(new KeyListener(){
+            @Override
+            public void keyPressed(KeyEvent e) {
+                switch (e.getKeyCode()) {
+                    case KeyEvent.VK_UP:
+                        physics.p1.boost(-1, 'y');
+                        break;
+                    case KeyEvent.VK_DOWN:
+                        physics.p1.boost(1, 'y');
+                        break;
+                    case KeyEvent.VK_LEFT:
+                        physics.p1.boost(-1, 'x');
+                        break;
+                    case KeyEvent.VK_RIGHT:
+                        physics.p1.boost(1, 'x');
+                        break;
+                }
+            }
+
+            @Override
+            public void keyTyped(KeyEvent e) {
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+                physics.p1.boost(0,'0');
+            }
+        });
     }
 
-    BufferStrategy strategy;
-    Graphics2D g;
-    Image img;
+    private BufferStrategy strategy;
+    private Graphics2D g;
+    private Image img;
 
     @Override
     public void run() {
@@ -104,21 +136,14 @@ public class PhysicsCanvas extends Canvas implements Runnable {
         b2.update(plat1);
 
         if (b2.win()) {
-            Object[] options = {"Tagga",
-                    "Plz noo",
-                    "Hejhej"};
-            int n = JOptionPane.showOptionDialog(this,
-                    "Grattis! Du sänkte boxen."
-                            + "Vill du spela igen?",
-                    "Omstart?",
-                    JOptionPane.YES_NO_CANCEL_OPTION,
-                    JOptionPane.QUESTION_MESSAGE,
-                    null,
-                    options,
-                    options[2]);
-            return n;
+            JOptionPane.showMessageDialog(this,
+                    "Ta det lugnt med våra boxar!",
+                    "Pang i bygget",
+                    JOptionPane.WARNING_MESSAGE);
+            System.exit(0);
         }
         return 0;
 
     }
+
 }
