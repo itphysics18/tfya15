@@ -132,8 +132,8 @@ public class PhysicsCanvas extends Canvas implements Runnable {
 
    private int update() {
         p1.update(b1, b2, plat1);
-        b1.update(plat1, b2);
-        b2.update(plat1, b1);
+        b1.update(plat1);
+        b2.update(plat1);
 
         if (b2.win()) {
             JOptionPane.showMessageDialog(this,

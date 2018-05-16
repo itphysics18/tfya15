@@ -146,7 +146,7 @@ public class Particle extends GameObject {
                 xBoost = boost; yBoost = boost;
                 break;
             case '0':
-                xBoost = 0; yBoost = 0
+                xBoost = 0; yBoost = 0;
                 break;
 
         }
