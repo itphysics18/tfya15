@@ -76,18 +76,35 @@ public class Box extends GameObject {
     }
 
 
-    public void update(Platform plat){
+    public void update(Platform plat, Box ob){
      // x += vx;
+        boolean gravity = false;
+        if ((x<r) && (vx < 0)) vx = 0;
+    //    if ((y<r) && (vy < 0)) vy *= bounce;
+        if (x>(800-r) && (vx > 0)) vx = 0;
+    //    if (y>(600-r) && (vy > 0)) vy *= bounce;
 
-      leapFrogX();
 
-        if ((x < plat.getX()-r || x > plat.getX() + plat.getW() + r) && y<(600-r)) { // x är lådans possition i x led(höger/vänster) -+ rade. och
-        //    System.out.println("hej");
+
+        leapFrogX();
+
+        if ((x < plat.getX()-r || x > plat.getX() + plat.getW() + r) && y<560) { // x är lådans possition i x led(höger/vänster) -+ rade. och
+            gravity = true;
+        }
+
+        if((y+r > ob.getY()+r) && (x+r > ob.getX()-r)){
+           System.out.println("NEE");
+            gravity = false;
+            vx = 0;
+            vy = 0;
+        }
+        if(gravity) {
+
+          //  System.out.println("hej");
             leapFrogY(vy);
         } else if (y>(600-r)) {
             y = 600-r;
         }
-
 
     }
     public void renderBox(Graphics2D g) {
