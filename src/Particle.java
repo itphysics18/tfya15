@@ -102,23 +102,9 @@ public class Particle extends GameObject {
 
     }
 
-    //double lastCollisionX = 0;
-    //double lastCollisionY = 0;
     int lastCollision = 0;
 
     public void collision (Box b) {
-        //  System.out.println("IM IN");
-     /*   vx = (3);
-        b.setVX((-20)); */
-        //  System.out.println(m);
-        //  vx = (((m - b.m) / (m + b.m)) * vx) + (((2 * b.m) / (m + b.m)) * b.vx);
-        // vx = (((m - b.m) / (m + b.m)) * vx);
-        //  b.set_vx((((2*m) / (m+b.m)) * vx) + (((b.m-m) / (m+b.m)) * b.vx));
-        //  b.set_vx(((2*m) / (m+b.m)) * vx);
-
-
-
-
         double deltaX = Math.abs(x - b.getX());
         double deltaY = Math.abs(y - b.getY());
         double distance = deltaX * deltaX + deltaY * deltaY;
@@ -141,17 +127,6 @@ public class Particle extends GameObject {
             ignoreBounce = 20;
             lastCollision = b.hashCode();
         }
-    /*    if (distance < (r + b.getR()) * (r + b.getR()) && ignoreBounce == 0) {
-            if (x < (lastCollisionX + r) && x > (lastCollisionX - r)
-                    && y < (lastCollisionY + r) && y > (lastCollisionY - r)) {
-                this.setVX((vx * (r - b.getR()) + (2 * b.getR() * b.getVX())) / (r + b.getR()));
-                this.setVY((vy * (r - b.getR()) + (2 * b.getR() * b.getVY())) / (r + b.getR()));
-                b.setVX((b.getVX() * (b.getR() - r) + (2 * r * vx)) / (b.getR() + r));
-                b.setVY((b.getVY() * (b.getR() - r) + (2 * r * vy)) / (b.getR() + r));
-                lastCollisionX = x;
-                lastCollisionY = y;
-            }
-        }*/
     }
 
     public void renderParticle(Graphics2D g) {

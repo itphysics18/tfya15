@@ -81,9 +81,11 @@ public class Box extends GameObject {
 
       leapFrogX();
 
-        if ((x < plat.getX()-r || x > plat.getX() + plat.getW() + r) && y<560) { // x är lådans possition i x led(höger/vänster) -+ rade. och
-            System.out.println("hej");
+        if ((x < plat.getX()-r || x > plat.getX() + plat.getW() + r) && y<(600-r)) { // x är lådans possition i x led(höger/vänster) -+ rade. och
+        //    System.out.println("hej");
             leapFrogY(vy);
+        } else if (y>(600-r)) {
+            y = 600-r;
         }
 
 
@@ -91,5 +93,15 @@ public class Box extends GameObject {
     public void renderBox(Graphics2D g) {
         g.drawImage(player, (int)Math.round(x - r), (int)Math.round(y - r),
                 (int)Math.round(r*2), (int)Math.round(r*2), null);    // Draw player
+    }
+
+    int winDelay = 0;
+    public boolean win() {
+        if(y>=600-r && winDelay > 200) {
+            return true;
+        } else {
+            winDelay++;
+            return false;
+        }
     }
 }

@@ -1,6 +1,11 @@
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.FileSystems;
 
 
 public class PhysicsCanvas extends Canvas implements Runnable {
@@ -44,16 +49,31 @@ public class PhysicsCanvas extends Canvas implements Runnable {
         myFrame.setLocationRelativeTo(null);
     }
 
+    BufferStrategy strategy;
+    Graphics2D g;
+    Image img;
+
     @Override
     public void run() {
+        strategy = getBufferStrategy();
+        g = (Graphics2D) strategy.getDrawGraphics();
+        try {
+            img = ImageIO.read(new File(FileSystems.getDefault().getPath("src", "background.gif").toUri()));
+        } catch (IOException e) {
+            System.out.println(e);
+        }
+        int gameStatus = 0;
         while (running) {
-            update();
+            gameStatus = update();
             render();
 
             try {
                 Thread.sleep(5);
             } catch (InterruptedException e) {
                 e.printStackTrace();
+                running = false;
+            }
+            if (gameStatus != 0) {
                 running = false;
             }
         }
@@ -69,11 +89,7 @@ public class PhysicsCanvas extends Canvas implements Runnable {
     }
 
     private void render() {
-        BufferStrategy strategy = getBufferStrategy();
-        Graphics2D g = (Graphics2D) strategy.getDrawGraphics();
-
-        g.setColor(Color.WHITE);
-        g.fillRect(0, 0, getWidth(), getHeight());
+        g.drawImage(img, 0,0,null);
 
         p1.renderParticle(g);
         b1.renderBox(g);
@@ -82,10 +98,27 @@ public class PhysicsCanvas extends Canvas implements Runnable {
         strategy.show();
     }
 
-   private void update() {
+   private int update() {
         p1.update(b1, b2, plat1);
         b1.update(plat1);
         b2.update(plat1);
+
+        if (b2.win()) {
+            Object[] options = {"Tagga",
+                    "Plz noo",
+                    "Hejhej"};
+            int n = JOptionPane.showOptionDialog(this,
+                    "Grattis! Du sänkte boxen."
+                            + "Vill du spela igen?",
+                    "Omstart?",
+                    JOptionPane.YES_NO_CANCEL_OPTION,
+                    JOptionPane.QUESTION_MESSAGE,
+                    null,
+                    options,
+                    options[2]);
+            return n;
+        }
+        return 0;
 
     }
 }
